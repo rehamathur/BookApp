@@ -42,6 +42,7 @@ error_reporting(0);
                 $tb = $selected_val . $Title . "comments"; 
                 
               $tb = str_replace(' ', '',$tb);  
+           $tb = preg_replace("/[^A-Za-z0-9 ]/", '', $tb);
                 echo $tb; 
               
 				$sql = "CREATE TABLE ".$tb." (

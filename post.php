@@ -4,6 +4,7 @@ session_start();
 
 
  $title = $_GET['id'];
+     $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
 $selected_val = $_SESSION['selectedBookGroup']; 
 $getPost = " SELECT * FROM ".$selected_val." WHERE title = '$title'";
 
@@ -77,7 +78,7 @@ $commentsTable = str_replace(' ', '',$commentsTable);
 
     <nav>
         <div class="nav-wrapper" style="background-color: #eee7dd;">
-            <a href="index.php" class="brand-logo center"><img class="responsive-img" style="width: 250px;padding-top:0px" src="imgs/CrowdReads_Banner_final.png" /></a>
+            <a href="index.php" class="brand-logo center"><img class="responsive-img" style="width: 250px;padding-top:11px" src="imgs/CrowdReads_Banner_final.png" /></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="logout.php" style="color: #F678A7;">Log out</a></li>
             </ul>
@@ -123,7 +124,7 @@ $commentsTable = str_replace(' ', '',$commentsTable);
 														
 							?>
 
-            <div class="card-panel" style="padding:20px">
+            <div class="card-panel grey lighten-4" style="padding:20px">
                 <h5>
                     <?php echo $r->username; ?>
                 </h5>

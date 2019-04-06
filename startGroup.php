@@ -14,7 +14,10 @@ $records = array();
 				
 				$insert = $db->prepare("INSERT INTO bookgroups (Title, Author, Genre) VALUES (?,?,?)");
 				$insert->bind_param('sss', $Title, $Author, $Genre);
-			 $booktablename = str_replace(' ', '',$Title);  
+                       
+            $booktablename = preg_replace("/[^A-Za-z0-9 ]/", '', $Title);
+
+			 $booktablename = str_replace(' ', '',$booktablename);  
 			 $booktablenameevents = $booktablename . "events";  
 
               
@@ -46,11 +49,24 @@ $records = array();
 				} else {
 				    echo "Error creating table: " . $db->error;
 				}
+                        $bookgrouptable = $_SESSION['username'] . "groups";
+
+             $insert2 = "INSERT INTO ".$bookgrouptable." (Title, Author, Genre)
+                            SELECT * FROM bookgroups 
+                            WHERE Title = '$Title'";
+            
 					if($insert->execute()) {
 
-						header('Location:index.php'); 
-						die(); 
+
 					}
+                         
+ 	if ($db->query($insert2) === TRUE) {
+				    echo "inserted created successfully";
+                    header("Location:index.php"); 
+                    die(); 
+				} else {
+				    echo "Error creating table: " . $db->error;
+				}
 			
 			}
 
