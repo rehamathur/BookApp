@@ -62,10 +62,11 @@ $commentsTable = str_replace(' ', '',$commentsTable);
 <html>
 
 <head>
-    <title>bOOK aPP</title>
+    <title>Crowd Reads</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
@@ -75,12 +76,15 @@ $commentsTable = str_replace(' ', '',$commentsTable);
     <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <nav>
-        <div class="nav-wrapper blue lighten-2">
-            <a href="index.php" class="brand-logo center">Books</a>
+        <div class="nav-wrapper" style="background-color: #eee7dd;">
+            <a href="index.php" class="brand-logo center"><img class="responsive-img" style="width: 250px;padding-top:0px" src="imgs/CrowdReads_Banner_final.png" /></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="startGroup.php">Start your own book group</a></li>
-
+                <li><a href="logout.php" style="color: #F678A7;">Log out</a></li>
             </ul>
+              <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="discover.php" style="color: #F678A7;">Discover other groups</a></li>
+            </ul>
+
         </div>
     </nav>
 
@@ -88,10 +92,10 @@ $commentsTable = str_replace(' ', '',$commentsTable);
     <div class="container">
         <div class="card-panel" style="padding:20px">
 
-            <h1>
+            <h3 class="card-text">
                 <?php echo $value->title ?>
-            </h1>
-            <p>by
+            </h3>
+            <p style="color:#87bedf;text-align:center;">by
                 <?php echo $value->username ?> | on
                 <?php echo $value->dateofpost ?> | from
                 <?php echo $value->chapter ?>:
@@ -110,7 +114,7 @@ $commentsTable = str_replace(' ', '',$commentsTable);
             <?php
 						if(!count($records)) {
 
-							echo 'no comments found'; 
+							echo 'No comments.'; 
 							} else {  
 					?>
 
@@ -152,11 +156,12 @@ $commentsTable = str_replace(' ', '',$commentsTable);
             <form action="" method="post">
                 <div class="field">
 
-                    <label for "text">Text</label>
+                    <label for="text">Comment</label>
                     <textarea name="text" id="text"></textarea>
                 </div>
                 <div class="field">
-                    <input type="submit" class="blue lighten-2 btn waves-effect waves-light" value="Insert"> </div>
+                    <button type='submit' class='col s12 btn btn-large waves-effect' style="background-color: #87BEDF;">Comment</button>
+                </div>
             </form>
 
         </div>

@@ -87,38 +87,83 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $db->close();
 }
 ?>
- 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 </head>
+
 <body>
-    <div class="wrapper">
-        <h2>Login</h2>
-        <p>Please fill in your credentials to login.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
-                <span class="help-block"><?php echo $password_err; ?></span>
+    <main>
+        <center>
+            <nav>
+                <div class="nav-wrapper" style="background-color: #eee7dd;">
+                    <a href="index.php" class="brand-logo center"><img class="responsive-img" style="width: 250px;" src="imgs/CrowdReads_Banner_final.png" /></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="login.php"  style="color: #F678A7;">Log in</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div class="section"></div>
+
+            <h4 style="font-family: 'Source Sans Pro', sans-serif;">Log in into your account!</h4>
+            <div class="section"></div>
+
+            <div class="container">
+                <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                    <form class="col s12" method="post">
+                        <div class='row'>
+                            <div class='col s12'>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <input class='validate' type='text' name='username' id='username' />
+                                <label for='username'>Enter your username</label>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <input class='validate' type='password' name='password' id='password' />
+                                <label for='password'>Enter your password</label>
+                            </div>
+                           
+                        </div>
+                        <center>
+                            <div class='row'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect ' style="background-color: #87BEDF;">Login</button>
+                            </div>
+                        </center>
+                        <a href="register.php" style="color: 87BEDF">Don't have an account?</a>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
-            </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
-        </form>
-    </div>    
+        </center>
+
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
+
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+    </style>
 </body>
+
 </html>

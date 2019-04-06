@@ -26,5 +26,5 @@
 				} else {
 				    echo "Error creating table: " . $db->error;
 				}
-     header('Location: bookgroup.php')
+     header('Location: index.php')
 ?> 

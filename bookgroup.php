@@ -73,33 +73,148 @@ error_reporting(0);
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<title></title>
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" /> </head>
-            <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-    <body class="grey lighten-4">
+  <title>Book Group</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+        
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <nav>
-            <div class="blue lighten-2 nav-wrapper">
-                <a href="competition.php" class="center brand-logo">
-                    <?php echo $notcleantitle; ?>
-                </a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="index.php">Other groups</a></li>
-                </ul>
-            </div>
-        </nav>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	    <!--Import materialize.css-->
+	    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection" />
+	    <link type="text/css" rel="stylesheet" href="css/main.css" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+   
+  $(document).ready(function() {
+   var calendar = $('#calendar').fullCalendar({
+    editable:true,
+    header:{
+     left:'prev,next today',
+     center:'title',
+     right:'month,agendaWeek,agendaDay'
+    },
+    events: 'load.php',
+    selectable:true,
+    selectHelper:true,
+    select: function(start, end, allDay)
+    {
+     var title = prompt("Enter Event Title");
+     if(title)
+     {
+      var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+      var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+      $.ajax({
+       url:"insert.php",
+       type:"POST",
+       data:{title:title, start:start, end:end},
+       success:function()
+       {
+        calendar.fullCalendar('refetchEvents');
+        alert("Added Successfully");
+       }
+      })
+     }
+    },
+    editable:true,
+    eventResize:function(event)
+    {
+     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+     var title = event.title;
+     var id = event.id;
+     $.ajax({
+      url:"update.php",
+      type:"POST",
+      data:{title:title, start:start, end:end, id:id},
+      success:function(){
+       calendar.fullCalendar('refetchEvents');
+       alert('Event Update');
+      }
+     })
+    },
+
+    eventDrop:function(event)
+    {
+     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+     var title = event.title;
+     var id = event.id;
+     $.ajax({
+      url:"update.php",
+      type:"POST",
+      data:{title:title, start:start, end:end, id:id},
+      success:function()
+      {
+       calendar.fullCalendar('refetchEvents');
+       alert("Event Updated");
+      }
+     });
+    },
+
+    eventClick:function(event)
+    {
+     if(confirm("Are you sure you want to remove it?"))
+     {
+      var id = event.id;
+      $.ajax({
+       url:"delete.php",
+       type:"POST",
+       data:{id:id},
+       success:function()
+       {
+        calendar.fullCalendar('refetchEvents');
+        alert("Event Removed");
+       }
+      })
+     }
+    },
+
+   });
+  });
+   
+  </script>
+        
+        
+        
+
+    
+ </head>
+            <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+        
+        
+    <body class="grey lighten-4">
+       <nav>
+	        <div class="nav-wrapper" style="background-color: #eee7dd;">
+	            <a href="index.php" class="brand-logo center"><img class="responsive-img" style="width: 250px;padding-top:0px" src="imgs/CrowdReads_Banner_final.png" /></a>
+	            <ul id="nav-mobile" class="right hide-on-med-and-down">
+	                <li><a href="logout.php" style="color: #F678A7;">Log out</a></li>
+	            </ul>
+                  <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="discover.php" style="color: #F678A7;">Discover other groups</a></li>
+            </ul>
+
+	        </div>
+	    </nav>
+         <div class="container">
+	        <div class="card-panel">
+	            <h2 class="card-text">
+	                <?php echo $notcleantitle; ?>
+	            </h2>
+	        </div>
+	    </div>
 		<div class = "container">
          
             <div class ="card-panel">
-			<h3>Posts</h3>
+			<h3 class = "card-text">Posts</h3>
 					<?php
 						if(!count($records)) {
 
-							echo 'no posts found'; 
+							echo 'There are currently no posts.'; 
 							} else {  
 					?>
 					<table> 
@@ -154,9 +269,21 @@ error_reporting(0);
                             <input type="number" name="page" id="page" autocomplete="off"> </div>
                         <div class="field">
                 
-                            <input type="submit" class="blue lighten-2 btn waves-effect waves-light" value="Insert"> </div>
+                             <button type='submit' class='col s12 btn btn-large waves-effect' style="background-color: #87BEDF;">Post</button>
+                        </div>
                     </form>
+                <br> 
+               
+            </div>
+            
+              <div class="card-panel">
+                  <h1 class="card-text">Calendar</h1>
+              <div id="calendar"></div>
             </div>
             </div>
+         
+        
+    
+        
 	</body> 
 	</html>
